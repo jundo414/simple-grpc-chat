@@ -1,37 +1,34 @@
 # Simple text-based chat using gRPC
 
 ## Usage
-for starting chat servers
+### for starting chat servers
 ```
 $ go run chat-server/server.go
 ```
 
-for starting chatting
+### for starting chatting
+\* RESTRICTION: Don't use duplicated name.
 ```
-$ go run chat-client/client.go {username}
+$ go run chat-client/client.go
 ```
 
 ## Example
 Client#1(Tom):
 ```
-$ go run chat-client/client.go Tom
-how r u?
-[Tom] how r u?
-[Jessie] not good
-[Jessie] my dog ran away from home again..
-really?! that's too bad..
-[Tom] really?! that's too bad..
+$ go run chat-client/client.go
+username: Tom
+Jessie> Hi, Tom
+Hello, Jessie
+How r u doing?
 ```
 
 Client#2(Jessie):
 ```
-$ go run chat-client/client.go Jessie
-[Tom] how r u?
-not good
-[Jessie] not good
-my dog ran away from home again..          
-[Jessie] my dog ran away from home again..
-[Tom] really?! that's too bad..
+$ go run chat-client/client.go
+username: Jessie
+Hi, Tom
+Tom> Hello, Jessie
+Tom> How r u doing?
 ```
 
 ## References

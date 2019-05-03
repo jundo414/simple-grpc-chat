@@ -26,7 +26,19 @@ func main() {
 	}
 	defer conn.Close()
 	c := pb.NewChatServiceClient(conn)
-	name := os.Args[1]
+
+	fmt.Print("username: ")
+	var name string
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		name = scanner.Text()
+		if len(name) > 0 {
+			break
+		} else {
+			fmt.Print("username: ")
+		}
+	}
+
 	stream, err := c.Connect(context.Background())
 	if err != nil {
 		log.Fatalf("could not connect: %s", err)
@@ -40,7 +52,9 @@ func main() {
 			if err != nil {
 				log.Fatalf("Failed to recv: %v", err)
 			}
-			fmt.Println(fmt.Sprintf("[% s] %s", res.GetName(), res.GetMessage()))
+			if name != res.GetName() {
+				fmt.Println(fmt.Sprintf("%s> %s", res.GetName(), res.GetMessage()))
+			}
 		}
 	}()
 	for {
